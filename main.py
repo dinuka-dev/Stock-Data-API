@@ -52,7 +52,7 @@ async def create_stock_list(stock_list: StockList):
     return res
 
 @app.get("/get_list/{list_id}")
-def read_root(shop_id: str):
+def read_root():
     shop_id = str(shop_id)
     data = getListData(shop_id)
     return data
