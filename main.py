@@ -69,6 +69,14 @@ def getLiveLists():
         print(e)
         return {'status': 'error'}
     
+def getAllLists():
+    all_data = []
+    list_ids = getLiveLists()
+    for i in list_ids:
+        list_data = getListData(i)
+        all_data.append(list_data)
+    return all_data
+    
 @app.post("/save_list/")
 async def create_stock_list(stock_list: StockList):
     res = save_list(stock_list)
@@ -88,6 +96,11 @@ async def receive_list(data_list: DataList):
 @app.get("/get_live_lists/")
 def read_root():
     data = getLiveLists()
+    return data
+
+@app.get("/get_all_lists/")
+def read_root():
+    data = getAllLists()
     return data
 
 if __name__ == "__main__":
