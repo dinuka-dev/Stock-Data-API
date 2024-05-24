@@ -51,7 +51,7 @@ def getListData(list_id: str):
     
 def addNewList(list_id: str):
     try:
-        file_name = "live.json"
+        file_name = "watchlists.json"
         with open(file_name, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)
         if list_id not in data:
@@ -76,6 +76,16 @@ def updateLiveLists(data_list: DataList):
 def getLiveLists():
     try:
         file_name = "live.json"
+        with open(file_name, 'r', encoding='utf-8') as json_file:
+            data = json.load(json_file)
+        return data
+    except Exception as e:
+        print(e)
+        return {'status': 'error'}
+    
+def getWatchLists():
+    try:
+        file_name = "watchlists.json"
         with open(file_name, 'r', encoding='utf-8') as json_file:
             data = json.load(json_file)
         return data
@@ -121,6 +131,11 @@ def read_root():
 @app.get("/get_all_lists/")
 def read_root():
     data = getAllLists()
+    return data
+
+@app.get("/get_watchlists/")
+def read_root():
+    data = getWatchLists()
     return data
 
 if __name__ == "__main__":
