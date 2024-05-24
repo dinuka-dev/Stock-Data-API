@@ -49,6 +49,20 @@ def getListData(list_id: str):
         print(e)
         return {'status': 'error'}
     
+def addNewList(list_id: str):
+    try:
+        file_name = "live.json"
+        with open(file_name, 'r', encoding='utf-8') as json_file:
+            data = json.load(json_file)
+        if list_id not in data:
+            data.append(list_id)
+            with open(file_name, 'w', encoding='utf-8') as json_file:
+                json.dump(data, json_file, indent=4)
+        return {'status': 'success'}
+    except Exception as e:
+        print(e)
+        return {'status': 'error'}
+    
 def updateLiveLists(data_list: DataList):
     try:
         file_name = "live.json"
@@ -86,6 +100,12 @@ async def create_stock_list(stock_list: StockList):
 def read_root(list_id: str):
     list_id = str(list_id)
     data = getListData(list_id)
+    return data
+
+@app.get("/add_list/{list_id}")
+def read_root(list_id: str):
+    list_id = str(list_id)
+    data = addNewList(list_id)
     return data
 
 @app.post("/update_live_lists/")
